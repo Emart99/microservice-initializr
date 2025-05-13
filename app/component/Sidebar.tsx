@@ -1,6 +1,46 @@
-import { ArrowRight, Database, GitBranch, Package, Server, Settings } from "lucide-react";
+"use client"
+import { Node } from "@xyflow/react";
+import { Database, GitBranch, Package, Server, Settings } from "lucide-react";
 
-export default function Sidebar() {
+const sidebarComponents = [
+    {
+        name: 'Microservice',
+        icon: <Server size={16} />,
+        id: '1'
+    },
+    {
+        name: 'Database',
+        icon: <Database size={16} />,
+        id: '2'
+    },
+    {
+        name: 'Api Gateway',
+        icon: <Database size={16} />,
+        id: '3'
+    },
+    {
+        name: 'Config Server',
+        icon: <Settings size={16} />,
+        id: '4'
+
+    },
+    {
+        name: 'Library Module',
+        icon: <Package size={16} />,
+        id: '5'
+
+    },
+    {
+        name: 'Service Discovery',
+        icon: <GitBranch size={16} />,
+        id: '6'
+    }
+]
+export default function Sidebar({ setNodes }) {
+    const handleClick = (name: string, id: string, icon: any) => {
+        const newNode = { id: id, position: { x: 760, y: 350 }, data: { label: <div className="flex gap-2 justify-center items-center">{icon}{name}</div> } }
+        setNodes((nds: Node[]) => nds.concat(newNode));
+    }
     return (
         <div>
             <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -13,45 +53,18 @@ export default function Sidebar() {
             <aside id="default-sidebar" className="fixed top-0 left-0 z-40 w-[23%] h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                     <h1 className=" mb-8 pt-8 text-xl font-semibold text-gray-900 dark:text-white text-center w-full ">Spring Microservice Initializr</h1>
-
                     <ul className="space-y-2 font-medium ">
-                        <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <Server size={16} />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Microservice</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <Database size={16} />
 
-                                <span className="flex-1 ms-3 whitespace-nowrap">Database</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <ArrowRight size={16} />
-                                <span className="flex-1 ms-3 whitespace-nowrap">API Gateway</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <Settings size={16} />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Config server</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <Package size={16} />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Library Module</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <GitBranch size={16} />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Service Discovery</span>
-                            </a>
-                        </li>
+                        {sidebarComponents.map((component, index) => {
+                            return (
+                                <li key={index}>
+                                    <a href="#" onClick={() => handleClick(component.name, component.id, component.icon)} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                        {component.icon}
+                                        <span className="flex-1 ms-3 whitespace-nowrap">{component.name}</span>
+                                    </a>
+                                </li>
+                            )
+                        })}
                     </ul>
                 </div>
             </aside>
