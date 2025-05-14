@@ -12,15 +12,18 @@ import {
   useReactFlow,
   ReactFlowProvider,
   Edge,
-  EdgeTypes,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 import { useCallback, useRef, useState } from "react";
-
+import FloatingEdge from "./component/xyflowCustom/FloatingEdge";
+import FloatingConnectionLine from "./component/xyflowCustom/FloatingConnectionLine";
+import CustomNode from "./component/xyflowCustom/CustomNode"
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
-
+const edgeTypes: floating = {
+  floating: FloatingEdge,
+};
 const getNodeIcon = (type: string) => {
   const component = sidebarComponents.find(comp => comp.type === type);
   return component ? component.icon : null;
@@ -29,6 +32,9 @@ const getNodeIcon = (type: string) => {
 const getNodeName = (type: string) => {
   const component = sidebarComponents.find(comp => comp.type === type);
   return component ? component.name : type;
+};
+const nodeTypes = {
+  customNode: CustomNode
 };
 
 function Flow() {
@@ -48,7 +54,16 @@ function Flow() {
   });
 
   const onConnect = useCallback(
-    (params: Edge) => setEdges((eds) => addEdge(params, eds)),
+    (params) =>
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...params,
+            type: 'floating',
+          },
+          eds,
+        ),
+      ),
     [setEdges],
   );
 
@@ -86,7 +101,7 @@ function Flow() {
 
       const newNode = {
         id: `${type}-${count}`,
-        type: 'default',
+        type: 'customNode',
         position,
         data: {
           label: (
@@ -95,7 +110,7 @@ function Flow() {
               {`${nodeName} ${count}`}
             </div>
           ),
-          type: type
+          type: type,
         },
       };
 
@@ -114,6 +129,9 @@ function Flow() {
         onConnect={onConnect}
         onDragOver={onDragOver}
         onDrop={onDrop}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        connectionLineComponent={FloatingConnectionLine}
         fitView
       >
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
