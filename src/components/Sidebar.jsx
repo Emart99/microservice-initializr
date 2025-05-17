@@ -1,7 +1,10 @@
 import { Database, GitBranch, Package, Router, Server, Settings } from "lucide-react";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import './sidebar.css'
+import './sidebar.css';
+import NodeDetailsForm from './NodeDetailsForm';
+import { ReactFlowProvider } from "@xyflow/react";
+
 export const sidebarComponents = [
     {
         name: 'Microservice',
@@ -34,11 +37,13 @@ export const sidebarComponents = [
         type: 'service-discovery'
     }
 ]
+
 export default function Sidebar() {
     const onDragStart = (event, nodeType) => {
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
     };
+
     return (
         <div>
             <div id="hs-sidebar-basic-usage" className="hs-overlay [--auto-close:lg] lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 w-80
@@ -59,7 +64,7 @@ export default function Sidebar() {
                         <div className=" pb-0 px-2  w-full flex flex-col flex-wrap" >
                             <Tabs>
                                 <TabList className="flex gap-2 justify-center bg-white dark:bg-zinc-800  ">
-                                    <Tab >Components</Tab>
+                                    <Tab>Components</Tab>
                                     <Tab>Edit Details</Tab>
                                 </TabList>
 
@@ -83,15 +88,13 @@ export default function Sidebar() {
                                     </ul>
                                 </TabPanel>
                                 <TabPanel>
-                                    <h2>Any content 2</h2>
+                                    <NodeDetailsForm />
                                 </TabPanel>
                             </Tabs>
-
                         </div>
                     </nav>
                 </div>
             </div>
         </div>
-
     )
 }

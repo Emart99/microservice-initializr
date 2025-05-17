@@ -109,7 +109,7 @@ function Flow() {
               <div className="text-start">
                 <h1 className="text-lg">{`${nodeName} ${count}`}</h1>
                 <p>port: {port}</p>
-                <p>name: {nodeName}</p>
+                <p>language: java</p>
               </div>
             </div>
           ),
@@ -135,7 +135,6 @@ function Flow() {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         connectionLineComponent={FloatingConnectionLine}
-
       >
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
         <Controls position="bottom-right" showFitView={false} showInteractive={false} />
@@ -176,13 +175,14 @@ export default function app() {
 
   return (
     <main className="min-h-screen dark:bg-gray-900">
-      <Sidebar />
 
       <div style={{ width: '100vw', height: '100vh' }}>
         <ReactFlowProvider>
+          <Sidebar />
+
           <div className="fixed top-4 right-4 z-50 flex gap-2">
             <DownloadButton />
-            <button type="button" className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-800 dark:focus:ring-zinc-800">
+            <button type="button" onClick={() => alert("Im working on this feature")} className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-800 dark:focus:ring-zinc-800">
               Generate Code
             </button>
             {theme === 'light' && (
