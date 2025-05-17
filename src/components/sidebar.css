@@ -10,7 +10,11 @@
     color:white;
 }
 .react-tabs__tab--selected {
-  border-bottom:1px solid white !important;
+  border-bottom:1px solid black 
+}
+
+.dark .react-tabs__tab--selected {
+  border-bottom:1px solid white 
 }
 .react-tabs__tab:focus:after {
   background: transparent;

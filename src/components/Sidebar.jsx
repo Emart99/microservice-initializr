@@ -75,7 +75,7 @@ export default function Sidebar() {
                     <nav className="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
                         <div className=" pb-0 px-2  w-full flex flex-col flex-wrap" >
                             <Tabs>
-                                <TabList className="tab-active flex gap-2 justify-center sticky top-0 z-10 dark:bg-zinc-800 dark:bg-zinc-800  border-neutral-700">
+                                <TabList className="tab-active flex gap-2 justify-center sticky top-0 z-10 bg-white border-black dark:bg-zinc-800 dark:bg-zinc-800  dark:border-neutral-700">
                                     <Tab>Components</Tab>
                                     <Tab>Edit Details</Tab>
                                 </TabList>
