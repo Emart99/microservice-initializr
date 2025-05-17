@@ -70,7 +70,7 @@ function FloatingConnectionLine({
             <circle
                 cx={tx || toX}
                 cy={ty || toY}
-                fill={isDarkMode ? '#2d2d2d' : '#fff'}
+                fill={isDarkMode ? '#2196f3' : '#fff'}
                 r={3}
                 stroke={edgeColor}
                 strokeWidth={1.5}

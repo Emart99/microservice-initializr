@@ -105,6 +105,7 @@ function Flow() {
         type: 'customNode',
         port: port,
         position,
+        deletable: true,
         data: {
           label: (
             <div className="flex gap-2 items-center">

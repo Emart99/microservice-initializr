@@ -296,4 +296,6 @@
 .react-flow__controls.vertical.bottom.right{
     bottom:5px;
 }
-
+.react-flow__edge.selectable:hover .react-flow__edge-path, .react-flow__edge.selectable.selected .react-flow__edge-path{
+  stroke:#2196f3;
+}
