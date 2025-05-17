@@ -58,9 +58,8 @@ export default function Sidebar() {
 
     return (
         <div>
-            <div id="hs-sidebar-basic-usage" className="hs-overlay [--auto-close:lg] lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 w-80
-                    hs-overlay-open:translate-x-0
-                    -translate-x-full transition-all duration-300 transform
+            <div id="hs-sidebar-basic-usage" className="hs-overlay 
+                    [--auto-close:lg] lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 w-80
                     h-full
                     hidden
                     fixed top-0 start-0 bottom-0 z-20
