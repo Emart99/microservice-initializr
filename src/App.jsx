@@ -10,6 +10,7 @@ import {
   ReactFlowProvider,
   useOnSelectionChange,
   ConnectionMode,
+  useKeyPress,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import './components/xy-theme.css';
@@ -124,6 +125,45 @@ function Flow() {
     },
     [reactFlowInstance, nodeCounters]
   );
+  const deleteKeyPressed = useKeyPress(['Delete', 'Backspace', 'Space']);
+
+  const [selectedElements, setSelectedElements] = useState({
+    nodes: [],
+    edges: []
+  });
+
+  useOnSelectionChange({
+    onChange: ({ nodes, edges }) => {
+      setSelectedElements({
+        nodes: nodes,
+        edges: edges
+      });
+    },
+  });
+
+  useEffect(() => {
+    if (deleteKeyPressed && (selectedElements.nodes.length > 0 || selectedElements.edges.length > 0)) {
+      handleDelete();
+    }
+  }, [deleteKeyPressed]);
+  const handleDelete = useCallback(() => {
+    if (selectedElements.nodes.length > 0) {
+      const nodesToDelete = selectedElements.nodes.map(node => node.id);
+      setNodes(nds => nds.filter(node => !nodesToDelete.includes(node.id)));
+
+      setEdges(eds => eds.filter(edge =>
+        !nodesToDelete.includes(edge.source) && !nodesToDelete.includes(edge.target)
+      ));
+    }
+
+    if (selectedElements.edges.length > 0) {
+      const edgesToDelete = selectedElements.edges.map(edge => edge.id);
+      setEdges(eds => eds.filter(edge => !edgesToDelete.includes(edge.id)));
+    }
+
+
+    setSelectedElements({ nodes: [], edges: [] });
+  }, [selectedElements, setNodes, setEdges]);
 
 
   return (
