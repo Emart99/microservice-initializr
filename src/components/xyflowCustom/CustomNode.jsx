@@ -5,7 +5,7 @@ export default function CustomNode  ({ data }) {
     <>
       <Handle type="target" position={Position.Left} />
 
-      <div className="bg-white dark:bg-gray rounded-sm" style={{ padding: '10px 20px' }}>
+      <div className="bg-gray-50 dark:bg-zinc-800 dark:text-white rounded-sm border-zinc-200 dark:border-zinc-400 border" style={{ padding: '10px 20px' }}>
         {data.label}
       </div>
  

@@ -122,7 +122,7 @@ function Flow() {
   );
 
   return (
-    <div className="w-full h-full" ref={reactFlowWrapper}>
+    <div className="w-full h-full dark:bg-[#171717]" ref={reactFlowWrapper}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -137,7 +137,7 @@ function Flow() {
         fitView
       >
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-        <Controls position="bottom-right" />
+        <Controls position="bottom-right" showFitView={false} showInteractive={false}/>
       </ReactFlow>
     </div>
   );
@@ -181,7 +181,7 @@ export default function app() {
         <ReactFlowProvider>
           <div className="fixed top-4 right-4 z-50 flex gap-2">
         <DownloadButton/>
-        <button type="button" className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
+        <button type="button" className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-800 dark:focus:ring-zinc-800">
           Generate Code
         </button>
         {theme === 'light' && (
@@ -197,7 +197,7 @@ export default function app() {
           <button
             type="button"
             onClick={() => toggleTheme('light')}
-            className="block p-2 hover:bg-gray-800 hover:cursor-pointer text-gray-400 rounded"
+            className="block p-2 hover:bg-zinc-800 hover:cursor-pointer text-gray-200 rounded"
           >
             <Sun />
           </button>
