@@ -1,6 +1,3 @@
-"use client"
-import { DarkThemeToggle } from "flowbite-react";
-import Sidebar, { sidebarComponents } from "../app/component/Sidebar"
 import {
   ReactFlow,
   Background,
@@ -11,25 +8,27 @@ import {
   Controls,
   useReactFlow,
   ReactFlowProvider,
-  Edge,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import { useCallback, useRef, useState } from "react";
-import FloatingEdge from "./component/xyflowCustom/FloatingEdge";
-import FloatingConnectionLine from "./component/xyflowCustom/FloatingConnectionLine";
-import CustomNode from "./component/xyflowCustom/CustomNode"
-const initialNodes: Node[] = [];
-const initialEdges: Edge[] = [];
-const edgeTypes: floating = {
+import { useCallback, useEffect, useRef, useState } from "react";
+import FloatingEdge from "./components/xyflowCustom/FloatingEdge";
+import FloatingConnectionLine from "./components/xyflowCustom/FloatingConnectionLine";
+import CustomNode from "./components/xyflowCustom/CustomNode"
+import Sidebar, { sidebarComponents } from './components/Sidebar';
+import { Moon, Sun } from 'lucide-react';
+import DownloadButton from './components/xyflowCustom/DownloadButton';
+const initialNodes = [];
+const initialEdges = [];
+const edgeTypes = {
   floating: FloatingEdge,
 };
-const getNodeIcon = (type: string) => {
+const getNodeIcon = (type) => {
   const component = sidebarComponents.find(comp => comp.type === type);
   return component ? component.icon : null;
 };
 
-const getNodeName = (type: string) => {
+const getNodeName = (type) => {
   const component = sidebarComponents.find(comp => comp.type === type);
   return component ? component.name : type;
 };
@@ -43,7 +42,7 @@ function Flow() {
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-
+  const [port, setPort] = useState(8080);
   const [nodeCounters, setNodeCounters] = useState({
     'microservice': 0,
     'database': 0,
@@ -67,14 +66,14 @@ function Flow() {
     [setEdges],
   );
 
-  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>): void => {
+  const onDragOver = useCallback((event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
 
   const onDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>): void => {
+    (event) => {
       event.preventDefault();
 
       const type = event.dataTransfer.getData('application/reactflow');
@@ -105,16 +104,19 @@ function Flow() {
         position,
         data: {
           label: (
-            <div className="flex gap-2 justify-center items-center">
+            <div className="flex gap-2 items-center">
               {nodeIcon}
-              {`${nodeName} ${count}`}
+              <div className="text-start">
+                {`${nodeName} ${count}`}
+                <p>port: {port}</p>
+              </div>
             </div>
           ),
           type: type,
         },
       };
-
       setNodes((nds) => nds.concat(newNode));
+      setPort(prev => prev + 1)
     },
     [reactFlowInstance, nodeCounters]
   );
@@ -141,15 +143,66 @@ function Flow() {
   );
 }
 
-export default function Home() {
+export default function app() {
+
+  const [theme, setTheme] = useState(() =>
+    document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  );
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    applyTheme(initialTheme);
+  }, []);
+
+  const applyTheme = (newTheme) => {
+    const root = document.documentElement;
+
+    if (newTheme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+
+    localStorage.setItem('theme', newTheme);
+    setTheme(newTheme);
+  };
+
+  const toggleTheme = () => {
+    applyTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <main className="min-h-screen dark:bg-gray-900">
-      <div className="fixed top-4 right-4 z-50">
-        <DarkThemeToggle />
-      </div>
       <Sidebar />
+      
       <div style={{ width: '100vw', height: '100vh' }}>
         <ReactFlowProvider>
+          <div className="fixed top-4 right-4 z-50 flex gap-2">
+        <DownloadButton/>
+        <button type="button" className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
+          Generate Code
+        </button>
+        {theme === 'light' && (
+          <button
+            type="button"
+            onClick={() => toggleTheme('dark')}
+            className="block p-2 hover:cursor-pointer hover:bg-gray-100 text-gray-800 rounded"
+          >
+            <Moon/>
+          </button>
+        )}
+        {theme === 'dark' && (
+          <button
+            type="button"
+            onClick={() => toggleTheme('light')}
+            className="block p-2 hover:bg-gray-800 hover:cursor-pointer text-gray-400 rounded"
+          >
+            <Sun />
+          </button>
+        )}
+      </div>
           <Flow />
         </ReactFlowProvider>
       </div>
