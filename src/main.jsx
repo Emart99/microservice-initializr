@@ -8,6 +8,6 @@ createRoot(document.getElementById('root')).render(
   <ReactFlowProvider>
     <StrictMode>
       <App />
-    </StrictMode>,
+    </StrictMode>
   </ReactFlowProvider>
 )
