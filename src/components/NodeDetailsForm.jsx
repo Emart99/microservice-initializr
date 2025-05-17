@@ -99,12 +99,13 @@ const formFields = {
     ],
 };
 
-export default function NodeDetailsForm() {
+export default function NodeDetailsForm({ toggleDetails }) {
     const { getNodes, setNodes, getEdges } = useReactFlow();
     const [selectedNode, setSelectedNode] = useState(null);
     const [formData, setFormData] = useState({});
     const [isFormVisible, setIsFormVisible] = useState(false);
-    console.log(selectedNode)
+
+
     useEffect(() => {
         const nodes = getNodes();
         const selected = nodes.find(node => node.selected);
@@ -113,13 +114,13 @@ export default function NodeDetailsForm() {
             setSelectedNode(selected);
             const nodeType = selected.data.type;
             const existingData = selected.data.details || {};
-            setFormData({ ...defaultValues[nodeType], ...existingData });
+            setFormData({ name: selected.id, port: selected.port, language: selected.port });
             setIsFormVisible(true);
         } else {
             setSelectedNode(null);
             setIsFormVisible(false);
         }
-    }, [getNodes]);
+    }, [toggleDetails]);
 
     const handleInputChange = useCallback((e) => {
         const { name, value, type, checked } = e.target;
@@ -257,7 +258,7 @@ export default function NodeDetailsForm() {
                 <div className="pt-4">
                     <button
                         type="submit"
-                        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-blue-600 dark:hover:bg-blue-500"
+                        className="w-full cursor-pointer text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-700 dark:focus:ring-zinc-800"
                     >
                         Update Node
                     </button>

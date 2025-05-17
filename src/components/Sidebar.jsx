@@ -3,7 +3,9 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import './sidebar.css';
 import NodeDetailsForm from './NodeDetailsForm';
-import { ReactFlowProvider } from "@xyflow/react";
+import { useCallback, useState } from "react";
+import { useOnSelectionChange } from "@xyflow/react";
+
 
 export const sidebarComponents = [
     {
@@ -39,10 +41,20 @@ export const sidebarComponents = [
 ]
 
 export default function Sidebar() {
+    const [toggleDetails, setToggleDetails] = useState(false)
     const onDragStart = (event, nodeType) => {
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
     };
+    const onChange = useCallback((event) => {
+        if (event.nodes[0]) {
+            setToggleDetails(prev => !prev)
+        }
+        else {
+            setToggleDetails(false)
+        }
+    })
+    useOnSelectionChange({ onChange, })
 
     return (
         <div>
@@ -63,7 +75,7 @@ export default function Sidebar() {
                     <nav className="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
                         <div className=" pb-0 px-2  w-full flex flex-col flex-wrap" >
                             <Tabs>
-                                <TabList className="flex gap-2 justify-center bg-white dark:bg-zinc-800  ">
+                                <TabList className="tab-active flex gap-2 justify-center sticky top-0 z-10 dark:bg-zinc-800 dark:bg-zinc-800  border-neutral-700">
                                     <Tab>Components</Tab>
                                     <Tab>Edit Details</Tab>
                                 </TabList>
@@ -87,8 +99,8 @@ export default function Sidebar() {
                                         })}
                                     </ul>
                                 </TabPanel>
-                                <TabPanel>
-                                    <NodeDetailsForm />
+                                <TabPanel className="h-full">
+                                    <NodeDetailsForm toggleDetails={toggleDetails} />
                                 </TabPanel>
                             </Tabs>
                         </div>

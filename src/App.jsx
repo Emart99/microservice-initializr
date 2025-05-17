@@ -8,6 +8,7 @@ import {
   Controls,
   useReactFlow,
   ReactFlowProvider,
+  useOnSelectionChange,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import './components/xy-theme.css';
@@ -101,6 +102,7 @@ function Flow() {
       const newNode = {
         id: `${type}-${count}`,
         type: 'customNode',
+        port: port,
         position,
         data: {
           label: (
@@ -109,7 +111,6 @@ function Flow() {
               <div className="text-start">
                 <h1 className="text-lg">{`${nodeName} ${count}`}</h1>
                 <p>port: {port}</p>
-                <p>language: java</p>
               </div>
             </div>
           ),
@@ -121,6 +122,7 @@ function Flow() {
     },
     [reactFlowInstance, nodeCounters]
   );
+
 
   return (
     <div className="w-full h-full dark:bg-[#171717]" ref={reactFlowWrapper}>
@@ -173,13 +175,12 @@ export default function app() {
     applyTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
+
   return (
-    <main className="min-h-screen dark:bg-gray-900">
-
-      <div style={{ width: '100vw', height: '100vh' }}>
-        <ReactFlowProvider>
+    <ReactFlowProvider>
+      <main className="min-h-screen dark:bg-gray-900">
+        <div style={{ width: '100vw', height: '100vh' }}>
           <Sidebar />
-
           <div className="fixed top-4 right-4 z-50 flex gap-2">
             <DownloadButton />
             <button type="button" onClick={() => alert("Im working on this feature")} className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-800 dark:focus:ring-zinc-800">
@@ -205,8 +206,8 @@ export default function app() {
             )}
           </div>
           <Flow />
-        </ReactFlowProvider>
-      </div>
-    </main>
+        </div>
+      </main>
+    </ReactFlowProvider>
   );
 }
