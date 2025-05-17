@@ -1,6 +1,5 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { getBezierPath } from '@xyflow/react';
-
 import { getEdgeParams } from './getEdgeParams';
 
 function FloatingConnectionLine({
@@ -10,11 +9,28 @@ function FloatingConnectionLine({
     toPosition,
     fromNode,
 }) {
+    const [isDarkMode, setIsDarkMode] = useState(
+        document.documentElement.classList.contains('dark')
+    );
+
+    useEffect(() => {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    setIsDarkMode(document.documentElement.classList.contains('dark'));
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, { attributes: true });
+
+        return () => observer.disconnect();
+    }, []);
+
     if (!fromNode) {
         return null;
     }
 
-    // Create a mock target node at the cursor position
     const targetNode = {
         id: 'connection-target',
         measured: {
@@ -40,11 +56,13 @@ function FloatingConnectionLine({
         targetY: ty || toY,
     });
 
+    const edgeColor = isDarkMode ? '#d1d1d1' : '#222';
+
     return (
         <g>
             <path
                 fill="none"
-                stroke="#222"
+                stroke={edgeColor}
                 strokeWidth={1.5}
                 className="animated"
                 d={edgePath}
@@ -52,9 +70,9 @@ function FloatingConnectionLine({
             <circle
                 cx={tx || toX}
                 cy={ty || toY}
-                fill="#fff"
+                fill={isDarkMode ? '#2d2d2d' : '#fff'}
                 r={3}
-                stroke="#222"
+                stroke={edgeColor}
                 strokeWidth={1.5}
             />
         </g>

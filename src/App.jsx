@@ -10,7 +10,7 @@ import {
   ReactFlowProvider,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-
+import './components/xy-theme.css'; 
 import { useCallback, useEffect, useRef, useState } from "react";
 import FloatingEdge from "./components/xyflowCustom/FloatingEdge";
 import FloatingConnectionLine from "./components/xyflowCustom/FloatingConnectionLine";
@@ -134,7 +134,7 @@ function Flow() {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         connectionLineComponent={FloatingConnectionLine}
-        fitView
+        
       >
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
         <Controls position="bottom-right" showFitView={false} showInteractive={false}/>
