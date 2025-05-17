@@ -110,7 +110,6 @@ function Flow() {
         data: {
           label: (
             <div className="flex gap-2 items-center">
-              {nodeIcon}
               <div className="text-start">
                 <h1 className="text-lg">{`${nodeName} ${count}`}</h1>
                 <p>port: {port}</p>
@@ -118,6 +117,7 @@ function Flow() {
             </div>
           ),
           type: type,
+          icon: nodeIcon,
         },
       };
       setNodes((nds) => nds.concat(newNode));
@@ -180,7 +180,6 @@ function Flow() {
         edgeTypes={edgeTypes}
         connectionLineComponent={FloatingConnectionLine}
         connectionMode={ConnectionMode.Loose}
-
       >
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
         <Controls position="bottom-right" showFitView={false} showInteractive={false} />
