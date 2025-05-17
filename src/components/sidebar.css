@@ -1,0 +1,14 @@
+.react-tabs__tab--selected{
+    background:none; 
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px solid;
+}
+
+.dark .react-tabs__tab {
+    color:white;
+}
+.react-tabs__tab{
+    position:unset;
+}

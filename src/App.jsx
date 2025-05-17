@@ -10,7 +10,7 @@ import {
   ReactFlowProvider,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import './components/xy-theme.css'; 
+import './components/xy-theme.css';
 import { useCallback, useEffect, useRef, useState } from "react";
 import FloatingEdge from "./components/xyflowCustom/FloatingEdge";
 import FloatingConnectionLine from "./components/xyflowCustom/FloatingConnectionLine";
@@ -107,8 +107,9 @@ function Flow() {
             <div className="flex gap-2 items-center">
               {nodeIcon}
               <div className="text-start">
-                {`${nodeName} ${count}`}
+                <h1 className="text-lg">{`${nodeName} ${count}`}</h1>
                 <p>port: {port}</p>
+                <p>name: {nodeName}</p>
               </div>
             </div>
           ),
@@ -134,10 +135,10 @@ function Flow() {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         connectionLineComponent={FloatingConnectionLine}
-        
+
       >
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-        <Controls position="bottom-right" showFitView={false} showInteractive={false}/>
+        <Controls position="bottom-right" showFitView={false} showInteractive={false} />
       </ReactFlow>
     </div>
   );
@@ -176,33 +177,33 @@ export default function app() {
   return (
     <main className="min-h-screen dark:bg-gray-900">
       <Sidebar />
-      
+
       <div style={{ width: '100vw', height: '100vh' }}>
         <ReactFlowProvider>
           <div className="fixed top-4 right-4 z-50 flex gap-2">
-        <DownloadButton/>
-        <button type="button" className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-800 dark:focus:ring-zinc-800">
-          Generate Code
-        </button>
-        {theme === 'light' && (
-          <button
-            type="button"
-            onClick={() => toggleTheme('dark')}
-            className="block p-2 hover:cursor-pointer hover:bg-gray-100 text-gray-800 rounded"
-          >
-            <Moon/>
-          </button>
-        )}
-        {theme === 'dark' && (
-          <button
-            type="button"
-            onClick={() => toggleTheme('light')}
-            className="block p-2 hover:bg-zinc-800 hover:cursor-pointer text-gray-200 rounded"
-          >
-            <Sun />
-          </button>
-        )}
-      </div>
+            <DownloadButton />
+            <button type="button" className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-800 dark:focus:ring-zinc-800">
+              Generate Code
+            </button>
+            {theme === 'light' && (
+              <button
+                type="button"
+                onClick={() => toggleTheme('dark')}
+                className="block p-2 hover:cursor-pointer hover:bg-gray-100 text-gray-800 rounded"
+              >
+                <Moon />
+              </button>
+            )}
+            {theme === 'dark' && (
+              <button
+                type="button"
+                onClick={() => toggleTheme('light')}
+                className="block p-2 hover:bg-zinc-800 hover:cursor-pointer text-gray-200 rounded"
+              >
+                <Sun />
+              </button>
+            )}
+          </div>
           <Flow />
         </ReactFlowProvider>
       </div>

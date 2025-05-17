@@ -1,5 +1,7 @@
-import { Database, GitBranch, Package, Server, Settings } from "lucide-react";
-
+import { Database, GitBranch, Package, Router, Server, Settings } from "lucide-react";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import './sidebar.css'
 export const sidebarComponents = [
     {
         name: 'Microservice',
@@ -13,7 +15,7 @@ export const sidebarComponents = [
     },
     {
         name: 'Api Gateway',
-        icon: <Database size={16} />,
+        icon: <Router size={16} />,
         type: 'api-gateway'
     },
     {
@@ -55,23 +57,36 @@ export default function Sidebar() {
 
                     <nav className="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
                         <div className=" pb-0 px-2  w-full flex flex-col flex-wrap" >
-                            
-                            <ul className="space-y-2 font-medium">
-                                {sidebarComponents.map((component, index) => {
-                                    return (
-                                        <li key={index}>
-                                            <div
-                                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-grab"
-                                                draggable
-                                                onDragStart={(event) => onDragStart(event, component.type)}
-                                            >
-                                                {component.icon}
-                                                <span className="flex-1 ms-3 whitespace-nowrap">{component.name}</span>
-                                            </div>
-                                        </li>
-                                    )
-                                })}
-                            </ul>
+                            <Tabs>
+                                <TabList className="flex gap-2 justify-center bg-white dark:bg-zinc-800  ">
+                                    <Tab >Components</Tab>
+                                    <Tab>Edit Details</Tab>
+                                </TabList>
+
+                                <TabPanel className="pt-5">
+                                    <p className="dark:text-gray-300 text-gray-700 text-xs text-center pb-5">Drag and drop component to the canvas</p>
+                                    <ul className="space-y-3 ml-3 font-medium">
+                                        {sidebarComponents.map((component, index) => {
+                                            return (
+                                                <li key={index}>
+                                                    <div
+                                                        className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-grab"
+                                                        draggable
+                                                        onDragStart={(event) => onDragStart(event, component.type)}
+                                                    >
+                                                        {component.icon}
+                                                        <span className="flex-1 ms-3 whitespace-nowrap">{component.name}</span>
+                                                    </div>
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </TabPanel>
+                                <TabPanel>
+                                    <h2>Any content 2</h2>
+                                </TabPanel>
+                            </Tabs>
+
                         </div>
                     </nav>
                 </div>
