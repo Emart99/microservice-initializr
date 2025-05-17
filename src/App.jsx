@@ -166,7 +166,6 @@ function Flow() {
     setSelectedElements({ nodes: [], edges: [] });
   }, [selectedElements, setNodes, setEdges]);
 
-
   return (
     <div className="w-full h-full dark:bg-[#171717]" ref={reactFlowWrapper}>
       <ReactFlow
@@ -190,6 +189,7 @@ function Flow() {
 }
 
 export default function app() {
+  const reactFlow = useReactFlow();
 
   const [theme, setTheme] = useState(() =>
     document.documentElement.classList.contains('dark') ? 'dark' : 'light'
@@ -219,40 +219,44 @@ export default function app() {
     applyTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
+  const generateCodeHandler = () => {
+    alert("Im currently working on this feature")
+    console.log(reactFlow.getEdges())
+    console.log(reactFlow.getNodes())
 
+
+  }
   return (
-    <ReactFlowProvider>
-      <main className="min-h-screen dark:bg-gray-900">
-        <div style={{ width: '100vw', height: '100vh' }}>
-          <Sidebar />
-          <div className="fixed top-4 right-4 z-50 flex gap-2">
-            <InfoModal />
-            <DownloadButton />
-            <button type="button" onClick={() => alert("Im working on this feature")} className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-800 dark:focus:ring-zinc-800">
-              Generate Code
+    <main className="min-h-screen dark:bg-gray-900">
+      <div style={{ width: '100vw', height: '100vh' }}>
+        <Sidebar />
+        <div className="fixed top-4 right-4 z-50 flex gap-2">
+          <InfoModal />
+          <DownloadButton />
+          <button type="button" onClick={generateCodeHandler} className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-2 py-1 text-center dark:border-gray-400 dark:text-gray-200 dark:hover:text-white dark:hover:bg-zinc-800 dark:focus:ring-zinc-800">
+            Generate Code
+          </button>
+          {theme === 'light' && (
+            <button
+              type="button"
+              onClick={() => toggleTheme('dark')}
+              className="block p-3 hover:cursor-pointer rounded-full hover:bg-gray-100 text-gray-800"
+            >
+              <Moon />
             </button>
-            {theme === 'light' && (
-              <button
-                type="button"
-                onClick={() => toggleTheme('dark')}
-                className="block p-3 hover:cursor-pointer rounded-full hover:bg-gray-100 text-gray-800"
-              >
-                <Moon />
-              </button>
-            )}
-            {theme === 'dark' && (
-              <button
-                type="button"
-                onClick={() => toggleTheme('light')}
-                className="block p-3 hover:bg-zinc-700 hover:cursor-pointer text-gray-200 rounded-full"
-              >
-                <Sun />
-              </button>
-            )}
-          </div>
-          <Flow />
+          )}
+          {theme === 'dark' && (
+            <button
+              type="button"
+              onClick={() => toggleTheme('light')}
+              className="block p-3 hover:bg-zinc-700 hover:cursor-pointer text-gray-200 rounded-full"
+            >
+              <Sun />
+            </button>
+          )}
         </div>
-      </main>
-    </ReactFlowProvider>
+        <Flow />
+      </div>
+    </main>
   );
 }

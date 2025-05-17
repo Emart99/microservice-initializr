@@ -51,7 +51,7 @@ export default function InfoModal() {
                                     </div>
                                     <div>
                                         <h4 className="font-medium text-gray-900 dark:text-white">Create Connections</h4>
-                                        <p className="mt-1">Click and drag from one component's handle to another component to create a connection between services.</p>
+                                        <p className="mt-1">Click and drag from one component's handle to another component to create a connection between services, databases, api gateways, etc.</p>
                                     </div>
                                 </div>
 
